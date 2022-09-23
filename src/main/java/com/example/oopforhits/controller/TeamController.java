@@ -1,6 +1,7 @@
 package com.example.oopforhits.controller;
 
 import com.example.oopforhits.model.Team;
+import com.example.oopforhits.model.dto.TeamDto;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -17,30 +19,30 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/team")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class TeamController implements RecordsController<Team> {
+public class TeamController implements RecordsController<TeamDto> {
 
     @Override
-    public void add(Team item) {
+    public void add(TeamDto item) {
 
     }
 
     @Override
-    public void change(Team item) {
+    public void change(TeamDto item) {
 
     }
 
     @Override
-    public ArrayList<Team> get() {
+    public List<TeamDto> get() {
         return null;
     }
 
     @Override
-    public Team getByUUID(UUID id) {
+    public TeamDto getById(Long id) {
         return null;
     }
 
     @Override
-    public void deleteByUUID(UUID id) {
+    public void deleteById(Long id) {
 
     }
 }

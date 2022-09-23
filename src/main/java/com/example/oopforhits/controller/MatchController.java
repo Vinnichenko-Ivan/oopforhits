@@ -1,6 +1,7 @@
 package com.example.oopforhits.controller;
 
 import com.example.oopforhits.model.Match;
+import com.example.oopforhits.model.dto.MatchDto;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -18,36 +20,36 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/match")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class MatchController implements EventsEnder, RecordsController<Match> {
+public class MatchController implements EventsEnder, RecordsController<MatchDto> {
 
     @PostMapping("/end")
     @Override
-    public void endEventByUUID(UUID id) {
+    public void endEventById(Long id) {
 
     }
 
     @Override
-    public void add(Match item) {
+    public void add(MatchDto item) {
 
     }
 
     @Override
-    public void change(Match item) {
+    public void change(MatchDto item) {
 
     }
 
     @Override
-    public ArrayList<Match> get() {
+    public List<MatchDto> get() {
         return null;
     }
 
     @Override
-    public Match getByUUID(UUID id) {
+    public MatchDto getById(Long id) {
         return null;
     }
 
     @Override
-    public void deleteByUUID(UUID id) {
+    public void deleteById(Long id) {
 
     }
 }

@@ -18,5 +18,5 @@ import java.util.UUID;
 public interface EventsEnder {
 
     @GetMapping("/EndEvent")
-    void endEventByUUID(UUID id);
+    void endEventById(Long id);
 }

@@ -12,15 +12,17 @@ import java.util.UUID;
  */
 
 @Entity
-@Table(name = "teams")
+@Table(name = "matches")
 public class Match {
     @Id
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    private UUID id;
+    private Long id;
 
     @Getter
     @Setter
+    @Column(name = "type")
     private MatchType type;
 
     @Getter
@@ -29,4 +31,9 @@ public class Match {
     @JoinColumn(name = "left_team_id")
     private Team leftTeam;
 
+    @Getter
+    @Setter
+    @ManyToOne()
+    @JoinColumn(name = "right_team_id")
+    private Team rightTeam;
 }

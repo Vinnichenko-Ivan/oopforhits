@@ -1,6 +1,7 @@
 package com.example.oopforhits.controller;
 
 import com.example.oopforhits.model.Bet;
+import com.example.oopforhits.model.dto.BetDto;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -17,29 +19,29 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/bet")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class BetController implements RecordsController<Bet> {
+public class BetController implements RecordsController<BetDto> {
     @Override
-    public void add(Bet item) {
+    public void add(BetDto item) {
 
     }
 
     @Override
-    public void change(Bet item) {
+    public void change(BetDto item) {
 
     }
 
     @Override
-    public ArrayList<Bet> get() {
+    public List<BetDto> get() {
         return null;
     }
 
     @Override
-    public Bet getByUUID(UUID id) {
+    public BetDto getById(Long id) {
         return null;
     }
 
     @Override
-    public void deleteByUUID(UUID id) {
+    public void deleteById(Long id) {
 
     }
 }

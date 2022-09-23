@@ -1,14 +1,14 @@
 package com.example.oopforhits.controller;
 
-import com.example.oopforhits.model.Player;
+import com.example.oopforhits.model.dto.PlayerDto;
+import com.example.oopforhits.service.impl.PlayerService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.List;
 
 /**
  * @author Ivan Vinnichenko
@@ -17,30 +17,32 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/player")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class PlayerController implements RecordsController<Player> {
+public class PlayerController implements RecordsController<PlayerDto> {
+
+    private final PlayerService playerService;
 
     @Override
-    public void add(Player item) {
-
+    public void add(PlayerDto item) {
+        playerService.add(item);
     }
 
     @Override
-    public void change(Player item) {
-
+    public void change(PlayerDto item) {
+        playerService.change(item);
     }
 
     @Override
-    public ArrayList<Player> get() {
-        return null;
+    public List<PlayerDto> get() {
+        return playerService.get();
     }
 
     @Override
-    public Player getByUUID(UUID id) {
-        return null;
+    public PlayerDto getById(Long id) {
+        return playerService.getById(id);
     }
 
     @Override
-    public void deleteByUUID(UUID id) {
-
+    public void deleteById(Long id) {
+        playerService.deleteById(id);
     }
 }
