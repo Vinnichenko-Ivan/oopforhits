@@ -1,6 +1,6 @@
 package com.example.oopforhits.controller;
 
-import com.example.oopforhits.model.Tournament;
+import com.example.oopforhits.model.Match;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,9 @@ import java.util.UUID;
  */
 @Api
 @RestController
-@RequestMapping("/tournament")
+@RequestMapping("/match")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class TournamentController implements EventsEnder, RecordsController<Tournament>{
+public class MatchController implements EventsEnder, RecordsController<Match> {
 
     @PostMapping("/end")
     @Override
@@ -27,22 +27,22 @@ public class TournamentController implements EventsEnder, RecordsController<Tour
     }
 
     @Override
-    public void add(Tournament item) {
+    public void add(Match item) {
 
     }
 
     @Override
-    public void change(Tournament item) {
+    public void change(Match item) {
 
     }
 
     @Override
-    public ArrayList<Tournament> get() {
+    public ArrayList<Match> get() {
         return null;
     }
 
     @Override
-    public Tournament getByUUID(UUID id) {
+    public Match getByUUID(UUID id) {
         return null;
     }
 

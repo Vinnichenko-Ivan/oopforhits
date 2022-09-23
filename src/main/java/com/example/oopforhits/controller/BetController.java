@@ -1,10 +1,9 @@
 package com.example.oopforhits.controller;
 
-import com.example.oopforhits.model.Tournament;
+import com.example.oopforhits.model.Bet;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,33 +15,26 @@ import java.util.UUID;
  */
 @Api
 @RestController
-@RequestMapping("/tournament")
+@RequestMapping("/bet")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class TournamentController implements EventsEnder, RecordsController<Tournament>{
-
-    @PostMapping("/end")
+public class BetController implements RecordsController<Bet> {
     @Override
-    public void endEventByUUID(UUID id) {
+    public void add(Bet item) {
 
     }
 
     @Override
-    public void add(Tournament item) {
+    public void change(Bet item) {
 
     }
 
     @Override
-    public void change(Tournament item) {
-
-    }
-
-    @Override
-    public ArrayList<Tournament> get() {
+    public ArrayList<Bet> get() {
         return null;
     }
 
     @Override
-    public Tournament getByUUID(UUID id) {
+    public Bet getByUUID(UUID id) {
         return null;
     }
 

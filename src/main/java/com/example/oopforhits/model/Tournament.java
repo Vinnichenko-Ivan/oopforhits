@@ -1,18 +1,19 @@
 package com.example.oopforhits.model;
 
+import lombok.Getter;
+
 import javax.persistence.*;
-import java.util.Set;
 import java.util.UUID;
 
+/**
+ * @author Ivan Vinnichenko
+ */
+
 @Entity
-@Table(name = "players")
-public class Player {
+@Table(name = "tournaments")
+public class Tournament {
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
-
-    private String name;
-
-    @ManyToMany
-    Set<Team> teams;
 }
