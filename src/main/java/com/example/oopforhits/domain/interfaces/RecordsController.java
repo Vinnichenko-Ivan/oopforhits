@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * @author Ivan Vinnichenko
  */
+
 @Api
 @RestController
 @RequestMapping("/api")

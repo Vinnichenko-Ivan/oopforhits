@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * @author Ivan Vinnichenko
  */
+
 public interface RecordsService<T> {
     void add(T item);
 

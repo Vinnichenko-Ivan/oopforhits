@@ -1,5 +1,6 @@
 package com.example.oopforhits.presentation.controllers;
 
+import com.example.oopforhits.data.implementations.TeamService;
 import com.example.oopforhits.data.model.dto.TeamDto;
 import com.example.oopforhits.domain.interfaces.RecordsController;
 import io.swagger.annotations.Api;
@@ -18,10 +19,11 @@ import java.util.List;
 @RequestMapping("/team")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class TeamController implements RecordsController<TeamDto> {
+    public final TeamService teamService;
 
     @Override
     public void add(TeamDto item) {
-
+        teamService
     }
 
     @Override

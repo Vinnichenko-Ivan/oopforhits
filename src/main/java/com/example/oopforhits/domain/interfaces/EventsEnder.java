@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public interface EventsEnder {
-
     @GetMapping("/EndEvent")
     void endEventById(Long id);
 }

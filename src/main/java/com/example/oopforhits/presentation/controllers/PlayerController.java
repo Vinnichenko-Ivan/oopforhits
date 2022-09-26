@@ -1,7 +1,7 @@
 package com.example.oopforhits.presentation.controllers;
 
-import com.example.oopforhits.data.model.dto.PlayerDto;
 import com.example.oopforhits.data.implementations.PlayerService;
+import com.example.oopforhits.data.model.dto.PlayerDto;
 import com.example.oopforhits.domain.interfaces.RecordsController;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;

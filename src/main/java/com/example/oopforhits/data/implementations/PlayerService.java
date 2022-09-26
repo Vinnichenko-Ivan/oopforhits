@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PlayerService implements RecordsService<PlayerDto> {
-
     @Autowired
     private final PlayerRepository playerRepository;
 
@@ -30,7 +29,7 @@ public class PlayerService implements RecordsService<PlayerDto> {
 
     @Override
     public void change(PlayerDto item) {
-        Player player = playerRepository.getById(item.getId());
+        Player player = playerRepository.getReferenceById(item.getId());
         player.setName(item.getName());
         playerRepository.save(player);
     }
@@ -49,7 +48,7 @@ public class PlayerService implements RecordsService<PlayerDto> {
 
     @Override
     public PlayerDto getById(Long id) {
-        Player player = playerRepository.getById(id);
+        Player player = playerRepository.getReferenceById(id);
         PlayerDto playerDto = new PlayerDto();
         playerDto.setId(id);
         playerDto.setName(player.getName());
