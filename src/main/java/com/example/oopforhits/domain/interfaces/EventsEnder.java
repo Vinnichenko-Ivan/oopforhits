@@ -1,12 +1,9 @@
-package com.example.oopforhits.controller;
+package com.example.oopforhits.domain.interfaces;
 
 import io.swagger.annotations.Api;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
 
 /**
  * @author Ivan Vinnichenko
@@ -18,5 +15,5 @@ import java.util.UUID;
 public interface EventsEnder {
 
     @GetMapping("/EndEvent")
-    void endEventByUUID(UUID id);
+    void endEventById(Long id);
 }
