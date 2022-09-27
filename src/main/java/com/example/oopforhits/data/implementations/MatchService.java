@@ -4,6 +4,7 @@ import com.example.oopforhits.data.model.Match;
 import com.example.oopforhits.data.model.Team;
 import com.example.oopforhits.data.model.dto.MatchDto;
 import com.example.oopforhits.data.model.enums.EndOfMatchType;
+import com.example.oopforhits.data.model.enums.MatchStatus;
 import com.example.oopforhits.domain.repositories.MatchRepository;
 import com.example.oopforhits.domain.repositories.TeamRepository;
 import com.example.oopforhits.domain.services.RecordsService;
@@ -12,6 +13,7 @@ import exception.TeamNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +31,9 @@ public class MatchService implements RecordsService<MatchDto> {
     @Autowired
     private final TeamRepository teamRepository;
 
+    @Autowired
+    private final BetManager betManager;
+
     @Override
     public void add(MatchDto item) {
         Match match = new Match();
@@ -45,7 +50,7 @@ public class MatchService implements RecordsService<MatchDto> {
 
     @Override
     public List<MatchDto> get() {
-        return matchRepository.findAll().stream().map(match -> {return toMatchDto(match);}).collect(Collectors.toList());
+        return matchRepository.findAll().stream().map(this::toMatchDto).collect(Collectors.toList());
     }
 
     @Override
@@ -58,9 +63,18 @@ public class MatchService implements RecordsService<MatchDto> {
         matchRepository.deleteById(id);
     }
 
+    @Transactional
     public void endMatchById(Long id, EndOfMatchType endOfMatchType) {
         Match match = matchRepository.findById(id).orElseThrow(MatchNotFoundException::new);
+        match.setMatchStatus(MatchStatus.ENDED);
+        betManager.matchEnded(match, endOfMatchType);
+    }
 
+    @Transactional
+    public void startMatchById(Long id) {
+        Match match = matchRepository.findById(id).orElseThrow(MatchNotFoundException::new);
+        match.setMatchStatus(MatchStatus.STARTED);
+        betManager.matchStarted(match);
     }
 
     private void toMatch(Match match, MatchDto matchDto)
@@ -70,6 +84,7 @@ public class MatchService implements RecordsService<MatchDto> {
         match.setLeftTeam(leftTeam);
         match.setRightTeam(rightTeam);
         match.setType(matchDto.getType());
+        match.setMatchStatus(matchDto.getMatchStatus());
     }
 
     private MatchDto toMatchDto(Match match)
@@ -79,6 +94,7 @@ public class MatchService implements RecordsService<MatchDto> {
         matchDto.setId(match.getId());
         matchDto.setLeftTeamId(match.getLeftTeam().getId());
         matchDto.setRightTeamId(match.getRightTeam().getId());
+        matchDto.setMatchStatus(match.getMatchStatus());
         return matchDto;
     }
 

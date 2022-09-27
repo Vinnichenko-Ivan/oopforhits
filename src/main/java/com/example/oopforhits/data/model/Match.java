@@ -1,5 +1,6 @@
 package com.example.oopforhits.data.model;
 
+import com.example.oopforhits.data.model.enums.MatchStatus;
 import com.example.oopforhits.data.model.enums.MatchType;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,4 +36,9 @@ public class Match {
     @ManyToOne()
     @JoinColumn(name = "right_team_id")
     private Team rightTeam;
+
+    @Getter
+    @Setter
+    @JoinColumn(name = "match_status")
+    private MatchStatus matchStatus;
 }

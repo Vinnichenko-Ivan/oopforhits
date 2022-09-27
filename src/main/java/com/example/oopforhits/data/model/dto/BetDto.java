@@ -1,5 +1,6 @@
 package com.example.oopforhits.data.model.dto;
 
+import com.example.oopforhits.data.model.enums.BetStatus;
 import com.example.oopforhits.data.model.enums.EndOfMatchType;
 import lombok.Data;
 
@@ -17,4 +18,6 @@ public class BetDto {
     private EndOfMatchType betType;
 
     private Long matchId;
+
+    private BetStatus betStatus;
 }
