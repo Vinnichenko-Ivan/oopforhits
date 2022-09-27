@@ -1,6 +1,6 @@
 package com.example.oopforhits.data.model;
 
-import com.example.oopforhits.data.model.enums.BetType;
+import com.example.oopforhits.data.model.enums.EndOfMatchType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,7 +31,7 @@ public class Bet {
     @Getter
     @Setter
     @Column(name = "bet_type")
-    private BetType betType;
+    private EndOfMatchType betType;
 
     @Getter
     @Setter

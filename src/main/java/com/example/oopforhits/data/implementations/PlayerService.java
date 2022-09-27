@@ -4,6 +4,7 @@ import com.example.oopforhits.data.model.Player;
 import com.example.oopforhits.data.model.dto.PlayerDto;
 import com.example.oopforhits.domain.repositories.PlayerRepository;
 import com.example.oopforhits.domain.services.RecordsService;
+import exception.PlayerNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,8 @@ public class PlayerService implements RecordsService<PlayerDto> {
 
     @Override
     public void change(PlayerDto item) {
-        Player player = playerRepository.getById(item.getId());
+        Player player = playerRepository.findById(item.getId())
+                .orElseThrow(PlayerNotFoundException::new);
         player.setName(item.getName());
         playerRepository.save(player);
     }
@@ -49,7 +51,8 @@ public class PlayerService implements RecordsService<PlayerDto> {
 
     @Override
     public PlayerDto getById(Long id) {
-        Player player = playerRepository.getById(id);
+        Player player = playerRepository.findById(id)
+                .orElseThrow(PlayerNotFoundException::new);
         PlayerDto playerDto = new PlayerDto();
         playerDto.setId(id);
         playerDto.setName(player.getName());

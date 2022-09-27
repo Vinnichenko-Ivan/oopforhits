@@ -21,10 +21,10 @@ public interface RecordsController<T> {
     @GetMapping("/get")
     List<T> get();
 
-    @GetMapping("/getByUUID")
+    @GetMapping("/getById")
     T getById(Long id);
 
-    @DeleteMapping("/deleteByUUID")
+    @DeleteMapping("/deleteById")
     void deleteById(Long id);
 
 }

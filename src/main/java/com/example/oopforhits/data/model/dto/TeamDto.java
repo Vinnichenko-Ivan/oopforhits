@@ -12,7 +12,7 @@ import java.util.Set;
 public class TeamDto {
     private Long id;
 
-    private Set<Long> playersUUID;
+    private Set<Long> playersId;
 
     private String name;
 }

@@ -1,6 +1,6 @@
 package com.example.oopforhits.data.model.dto;
 
-import com.example.oopforhits.data.model.enums.BetType;
+import com.example.oopforhits.data.model.enums.EndOfMatchType;
 import lombok.Data;
 
 /**
@@ -14,7 +14,7 @@ public class BetDto {
 
     private Double ratio;
 
-    private BetType betType;
+    private EndOfMatchType betType;
 
     private Long matchId;
 }

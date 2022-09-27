@@ -1,6 +1,8 @@
 package com.example.oopforhits.presentation.controllers;
 
+import com.example.oopforhits.data.implementations.MatchService;
 import com.example.oopforhits.data.model.dto.MatchDto;
+import com.example.oopforhits.data.model.enums.EndOfMatchType;
 import com.example.oopforhits.domain.interfaces.EventsEnder;
 import com.example.oopforhits.domain.interfaces.RecordsController;
 import io.swagger.annotations.Api;
@@ -20,9 +22,12 @@ import java.util.List;
 @RequestMapping("/match")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class MatchController implements EventsEnder, RecordsController<MatchDto> {
+
+    private final MatchService matchService;
+
     @PostMapping("/end")
     @Override
-    public void endEventById(Long id) {
+    public void endEventById(Long id, EndOfMatchType endOfMatchType) {
 
     }
 

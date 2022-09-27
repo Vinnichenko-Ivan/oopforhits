@@ -1,5 +1,6 @@
 package com.example.oopforhits.presentation.controllers;
 
+import com.example.oopforhits.data.implementations.BetService;
 import com.example.oopforhits.data.model.dto.BetDto;
 import com.example.oopforhits.domain.interfaces.RecordsController;
 import io.swagger.annotations.Api;
@@ -18,6 +19,9 @@ import java.util.List;
 @RequestMapping("/bet")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class BetController implements RecordsController<BetDto> {
+
+    private final BetService betService;
+
     @Override
     public void add(BetDto item) {
 
