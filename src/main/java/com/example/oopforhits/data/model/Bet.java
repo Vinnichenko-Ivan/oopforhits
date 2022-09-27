@@ -1,5 +1,6 @@
 package com.example.oopforhits.data.model;
 
+import com.example.oopforhits.data.model.enums.BetStatus;
 import com.example.oopforhits.data.model.enums.EndOfMatchType;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,4 +38,8 @@ public class Bet {
     @Setter
     @ManyToOne
     private Match match;
+
+    @Getter
+    @Setter
+    private BetStatus betStatus;
 }

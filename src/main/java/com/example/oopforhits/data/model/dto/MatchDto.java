@@ -13,7 +13,7 @@ public class MatchDto {
 
     private MatchType type;
 
-    private Long leftTeamUUID;
+    private Long leftTeamId;
 
-    private Long rightTeamUUID;
+    private Long rightTeamId;
 }

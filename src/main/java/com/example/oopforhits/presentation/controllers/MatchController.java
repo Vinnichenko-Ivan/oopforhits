@@ -33,26 +33,26 @@ public class MatchController implements EventsEnder, RecordsController<MatchDto>
 
     @Override
     public void add(MatchDto item) {
-
+        matchService.add(item);
     }
 
     @Override
     public void change(MatchDto item) {
-
+        matchService.change(item);
     }
 
     @Override
     public List<MatchDto> get() {
-        return null;
+        return matchService.get();
     }
 
     @Override
     public MatchDto getById(Long id) {
-        return null;
+        return matchService.getById(id);
     }
 
     @Override
     public void deleteById(Long id) {
-
+        matchService.deleteById(id);
     }
 }
