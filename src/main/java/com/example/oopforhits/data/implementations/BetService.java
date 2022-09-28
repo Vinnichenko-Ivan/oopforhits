@@ -78,18 +78,14 @@ public class BetService implements RecordsService<BetDto> {
     @Override
     public void deleteById(Long id) {
         Bet bet = betRepository.findById(id).orElseThrow(BetNotFoundException::new);
-        if(bet.getBetStatus() == BetStatus.NOT_STATE)
-        {
+        if (bet.getBetStatus() == BetStatus.NOT_STATE) {
             betRepository.deleteById(id);
-        }
-        else
-        {
+        } else {
             throw new BetIsPlayedException();
         }
     }
 
-    private void toBet(Bet bet, BetDto betDto)
-    {
+    private void toBet(Bet bet, BetDto betDto) {
         betMapper.fromDto(bet, betDto);
         bet.setMatch(matchRepository.findById(betDto.getMatchId()).orElseThrow(MatchNotFoundException::new));
     }

@@ -92,8 +92,7 @@ public class MatchService implements RecordsService<MatchDto> {
         betManager.matchStarted(match);
     }
 
-    private void toMatch(Match match, MatchDto matchDto)
-    {
+    private void toMatch(Match match, MatchDto matchDto) {
         Team leftTeam = teamRepository.findById(matchDto.getLeftTeamId()).orElseThrow(TeamNotFoundException::new);
         Team rightTeam = teamRepository.findById(matchDto.getRightTeamId()).orElseThrow(TeamNotFoundException::new);
         match.setLeftTeam(leftTeam);

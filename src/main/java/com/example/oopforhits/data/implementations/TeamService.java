@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-public class TeamService  implements RecordsService<TeamDto> {
+public class TeamService implements RecordsService<TeamDto> {
 
     @Autowired
     private final PlayerRepository playerRepository;
