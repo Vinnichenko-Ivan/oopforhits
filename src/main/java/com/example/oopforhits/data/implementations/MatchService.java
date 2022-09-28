@@ -8,6 +8,7 @@ import com.example.oopforhits.data.model.enums.MatchStatus;
 import com.example.oopforhits.domain.repositories.MatchRepository;
 import com.example.oopforhits.domain.repositories.TeamRepository;
 import com.example.oopforhits.domain.services.RecordsService;
+import exception.MatchIllegalStateException;
 import exception.MatchNotFoundException;
 import exception.TeamNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -34,10 +35,14 @@ public class MatchService implements RecordsService<MatchDto> {
     @Autowired
     private final BetManager betManager;
 
+    @Autowired
+    private final MatchMapper matchMapper;
+
     @Override
     public void add(MatchDto item) {
         Match match = new Match();
         toMatch(match, item);
+        match.setMatchStatus(MatchStatus.PLANED);
         matchRepository.save(match);
     }
 
@@ -50,12 +55,12 @@ public class MatchService implements RecordsService<MatchDto> {
 
     @Override
     public List<MatchDto> get() {
-        return matchRepository.findAll().stream().map(this::toMatchDto).collect(Collectors.toList());
+        return matchRepository.findAll().stream().map(matchMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
     public MatchDto getById(Long id) {
-        return toMatchDto(matchRepository.findById(id).orElseThrow(MatchNotFoundException::new));
+        return matchMapper.toDto(matchRepository.findById(id).orElseThrow(MatchNotFoundException::new));
     }
 
     @Override
@@ -66,14 +71,24 @@ public class MatchService implements RecordsService<MatchDto> {
     @Transactional
     public void endMatchById(Long id, EndOfMatchType endOfMatchType) {
         Match match = matchRepository.findById(id).orElseThrow(MatchNotFoundException::new);
-        match.setMatchStatus(MatchStatus.ENDED);
+        if (match.getMatchStatus() == MatchStatus.STARTED) {
+            match.setMatchStatus(MatchStatus.ENDED);
+        } else {
+            throw new MatchIllegalStateException();
+        }
+        matchRepository.save(match);
         betManager.matchEnded(match, endOfMatchType);
     }
 
     @Transactional
     public void startMatchById(Long id) {
         Match match = matchRepository.findById(id).orElseThrow(MatchNotFoundException::new);
-        match.setMatchStatus(MatchStatus.STARTED);
+        if (match.getMatchStatus() == MatchStatus.PLANED) {
+            match.setMatchStatus(MatchStatus.STARTED);
+        } else {
+            throw new MatchIllegalStateException();
+        }
+        matchRepository.save(match);
         betManager.matchStarted(match);
     }
 
@@ -83,19 +98,8 @@ public class MatchService implements RecordsService<MatchDto> {
         Team rightTeam = teamRepository.findById(matchDto.getRightTeamId()).orElseThrow(TeamNotFoundException::new);
         match.setLeftTeam(leftTeam);
         match.setRightTeam(rightTeam);
-        match.setType(matchDto.getType());
-        match.setMatchStatus(matchDto.getMatchStatus());
+        matchMapper.fromDto(match, matchDto);
     }
 
-    private MatchDto toMatchDto(Match match)
-    {
-        MatchDto matchDto = new MatchDto();
-        matchDto.setType(match.getType());
-        matchDto.setId(match.getId());
-        matchDto.setLeftTeamId(match.getLeftTeam().getId());
-        matchDto.setRightTeamId(match.getRightTeam().getId());
-        matchDto.setMatchStatus(match.getMatchStatus());
-        return matchDto;
-    }
 
 }

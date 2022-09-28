@@ -41,8 +41,7 @@ public class PlayerService implements RecordsService<PlayerDto> {
     public List<PlayerDto> get() {
         return playerRepository.findAll().stream().map(
                 player -> {
-                    PlayerDto playerDto = new PlayerDto();
-                    playerDto.setName(player.getName());
+                    PlayerDto playerDto = new PlayerDto(player.getName());
                     playerDto.setId(player.getId());
                     return playerDto;
                 }
@@ -53,14 +52,18 @@ public class PlayerService implements RecordsService<PlayerDto> {
     public PlayerDto getById(Long id) {
         Player player = playerRepository.findById(id)
                 .orElseThrow(PlayerNotFoundException::new);
-        PlayerDto playerDto = new PlayerDto();
+        PlayerDto playerDto = new PlayerDto(player.getName());
         playerDto.setId(id);
-        playerDto.setName(player.getName());
         return playerDto;
     }
 
     @Override
     public void deleteById(Long id) {
-        playerRepository.deleteById(id);
+        if (playerRepository.existsById(id)) {
+            playerRepository.deleteById(id);
+        } else {
+            throw new PlayerNotFoundException();
+        }
+
     }
 }

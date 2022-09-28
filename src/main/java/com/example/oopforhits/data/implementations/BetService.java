@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,50 +33,46 @@ public class BetService implements RecordsService<BetDto> {
     @Autowired
     private final MatchRepository matchRepository;
 
+    @Autowired
+    private final BetMapper betMapper;
+
     @Override
     public void add(BetDto item) {
         Bet bet = new Bet();
         toBet(bet, item);
         bet.setBetStatus(BetStatus.NOT_STATE);
-        if(betManager.betIsAccept(bet))
-        {
-            betRepository.save(bet);
-        }
-        else
-        {
-            throw new BetIsNotAcceptException();
+        if (bet.getBetStatus() == BetStatus.NOT_STATE) {
+            if (betManager.betIsAccept(bet)) {
+                betRepository.save(bet);
+            } else {
+                throw new BetIsNotAcceptException();
+            }
         }
     }
 
     @Override
     public void change(BetDto item) {
         Bet bet = betRepository.findById(item.getId()).orElseThrow(BetNotFoundException::new);
-        if(bet.getBetStatus() == BetStatus.NOT_STATE)
-        {
+        if (bet.getBetStatus() == BetStatus.NOT_STATE) {
             toBet(bet, item);
-            if(betManager.betIsAccept(bet))
-            {
+            if (betManager.betIsAccept(bet)) {
                 betRepository.save(bet);
-            }
-            else
-            {
+            } else {
                 throw new BetIsNotAcceptException();
             }
-        }
-        else
-        {
+        } else {
             throw new BetIsPlayedException();
         }
     }
 
     @Override
     public List<BetDto> get() {
-        return betRepository.findAll().stream().map(this::toBetDto).collect(Collectors.toList());
+        return betRepository.findAll().stream().map(betMapper::toDto).collect(Collectors.toList());
     }
 
     @Override
     public BetDto getById(Long id) {
-        return toBetDto(betRepository.findById(id).orElseThrow(BetNotFoundException::new));
+        return betMapper.toDto(betRepository.findById(id).orElseThrow(BetNotFoundException::new));
     }
 
     @Override
@@ -95,21 +90,8 @@ public class BetService implements RecordsService<BetDto> {
 
     private void toBet(Bet bet, BetDto betDto)
     {
-        bet.setBetStatus(betDto.getBetStatus());
-        bet.setBetType(betDto.getBetType());
-        bet.setRatio(betDto.getRatio());
-        bet.setValue(betDto.getRatio());
+        betMapper.fromDto(bet, betDto);
         bet.setMatch(matchRepository.findById(betDto.getMatchId()).orElseThrow(MatchNotFoundException::new));
     }
 
-    private BetDto toBetDto(Bet bet)
-    {
-        BetDto betDto = new BetDto();
-        betDto.setBetType(bet.getBetType());
-        betDto.setBetStatus(bet.getBetStatus());
-        betDto.setRatio(bet.getRatio());
-        betDto.setId(bet.getId());
-        betDto.setMatchId(bet.getMatch().getId());
-        return betDto;
-    }
 }

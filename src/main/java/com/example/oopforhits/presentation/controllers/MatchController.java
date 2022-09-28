@@ -3,12 +3,11 @@ package com.example.oopforhits.presentation.controllers;
 import com.example.oopforhits.data.implementations.MatchService;
 import com.example.oopforhits.data.model.dto.MatchDto;
 import com.example.oopforhits.data.model.enums.EndOfMatchType;
-import com.example.oopforhits.domain.interfaces.StartEndEvents;
 import com.example.oopforhits.domain.interfaces.RecordsController;
+import com.example.oopforhits.domain.interfaces.StartEndEvents;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,12 +26,12 @@ public class MatchController implements StartEndEvents, RecordsController<MatchD
 
     @Override
     public void endEventById(Long id, EndOfMatchType endOfMatchType) {
-
+        matchService.endMatchById(id, endOfMatchType);
     }
 
     @Override
     public void startEventById(Long id) {
-
+        matchService.startMatchById(id);
     }
 
     @Override

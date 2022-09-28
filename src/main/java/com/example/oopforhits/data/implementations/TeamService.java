@@ -2,7 +2,6 @@ package com.example.oopforhits.data.implementations;
 
 import com.example.oopforhits.data.model.Player;
 import com.example.oopforhits.data.model.Team;
-import com.example.oopforhits.data.model.dto.PlayerDto;
 import com.example.oopforhits.data.model.dto.TeamDto;
 import com.example.oopforhits.domain.repositories.PlayerRepository;
 import com.example.oopforhits.domain.repositories.TeamRepository;
@@ -13,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,52 +32,52 @@ public class TeamService  implements RecordsService<TeamDto> {
     @Override
     public void add(TeamDto item) {
         Team team = new Team();
-        team.setName(item.getName());
-        Set<Player> players = new HashSet<>();
-        for (Long playerId : item.getPlayersId()) {
-            Player player = playerRepository.findById(playerId)
-                    .orElseThrow(PlayerNotFoundException::new);
-            players.add(player);
-            team.setPlayers(players);
-        }
+        toTeam(team, item);
         teamRepository.save(team);
     }
 
     @Override
     public void change(TeamDto item) {
         Team team = teamRepository.findById(item.getId()).orElseThrow(TeamNotFoundException::new);
-        team.setName(item.getName());
-        Set<Player> players = new HashSet<>();
-        for (Long playerId : item.getPlayersId()) {
-            Player player = playerRepository.findById(playerId)
-                    .orElseThrow(PlayerNotFoundException::new);
-            players.add(player);
-            team.setPlayers(players);
-        }
+        toTeam(team, item);
         teamRepository.save(team);
     }
 
     @Override
     public List<TeamDto> get() {
-        return teamRepository.findAll().stream().map((team -> {
-            TeamDto teamDto = new TeamDto();
-            teamDto.setName(team.getName());
-            teamDto.setId(teamDto.getId());
-            Set<Long> playersId = new HashSet<>();
-            for (Player player : team.getPlayers()) {
-                playersId.add(player.getId());
-            }
-            teamDto.setPlayersId(playersId);
-            return teamDto;
-        })).collect(Collectors.toList());
+        return teamRepository.findAll().stream().map(this::toTeamDto).collect(Collectors.toList());
     }
 
     @Override
     public TeamDto getById(Long id) {
-        Team team = teamRepository.findById(id).orElseThrow(TeamNotFoundException::new);
-        TeamDto teamDto = new TeamDto();
-        teamDto.setName(team.getName());
-        teamDto.setId(teamDto.getId());
+        return toTeamDto(teamRepository.findById(id).orElseThrow(TeamNotFoundException::new));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        if (teamRepository.existsById(id)) {
+            teamRepository.deleteById(id);
+        } else {
+            throw new TeamNotFoundException();
+        }
+    }
+
+    private void toTeam(Team team, TeamDto teamDto) {
+        team.setName(teamDto.getName());
+        Set<Player> players = new HashSet<>();
+        if (teamDto.getPlayersId() != null) {
+            for (Long playerId : teamDto.getPlayersId()) {
+                Player player = playerRepository.findById(playerId)
+                        .orElseThrow(PlayerNotFoundException::new);
+                players.add(player);
+                team.setPlayers(players);
+            }
+        }
+    }
+
+    private TeamDto toTeamDto(Team team) {
+        TeamDto teamDto = new TeamDto(team.getName());
+        teamDto.setId(team.getId());
         Set<Long> playersId = new HashSet<>();
         for (Player player : team.getPlayers()) {
             playersId.add(player.getId());
@@ -88,8 +86,4 @@ public class TeamService  implements RecordsService<TeamDto> {
         return teamDto;
     }
 
-    @Override
-    public void deleteById(Long id) {
-        teamRepository.deleteById(id);
-    }
 }

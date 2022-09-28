@@ -7,12 +7,12 @@ import com.example.oopforhits.data.model.enums.EndOfMatchType;
 import com.example.oopforhits.domain.interfaces.BetManagerInterface;
 import com.example.oopforhits.domain.repositories.BetRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Ivan Vinnichenko
  */
-@Service
+@Component
 @RequiredArgsConstructor
 public class BetManager implements BetManagerInterface {
 

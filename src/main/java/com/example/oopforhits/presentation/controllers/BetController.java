@@ -24,26 +24,26 @@ public class BetController implements RecordsController<BetDto> {
 
     @Override
     public void add(BetDto item) {
-
+        betService.add(item);
     }
 
     @Override
     public void change(BetDto item) {
-
+        betService.change(item);
     }
 
     @Override
     public List<BetDto> get() {
-        return null;
+        return betService.get();
     }
 
     @Override
     public BetDto getById(Long id) {
-        return null;
+        return betService.getById(id);
     }
 
     @Override
     public void deleteById(Long id) {
-
+        betService.deleteById(id);
     }
 }
