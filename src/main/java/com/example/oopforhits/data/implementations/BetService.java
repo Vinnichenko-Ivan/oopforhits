@@ -11,7 +11,6 @@ import exception.BetIsPlayedException;
 import exception.BetNotFoundException;
 import exception.MatchNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,16 +23,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BetService implements RecordsService<BetDto> {
 
-    @Autowired
     private final BetManager betManager;
 
-    @Autowired
     private final BetRepository betRepository;
 
-    @Autowired
     private final MatchRepository matchRepository;
 
-    @Autowired
     private final BetMapper betMapper;
 
     @Override

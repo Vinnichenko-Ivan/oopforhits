@@ -21,24 +21,19 @@ public class BetManager implements BetManagerInterface {
 
     @Override
     public void matchEnded(Match match, EndOfMatchType endOfMatchType) {
-        for (Bet bet : betRepository.findAll()) {
-            if (bet.getMatch() == match) {
-                if (endOfMatchType == bet.getBetType()) {
-                    bet.setBetStatus(BetStatus.WIN);
-                } else {
-                    bet.setBetStatus(BetStatus.LOSE);
-                }
+        for (Bet bet : betRepository.findAllByMatch(match)) {
+            if (endOfMatchType == bet.getBetType()) {
+                bet.setBetStatus(BetStatus.WIN);
+            } else {
+                bet.setBetStatus(BetStatus.LOSE);
             }
         }
-
     }
 
     @Override
     public void matchStarted(Match match) {
-        for (Bet bet : betRepository.findAll()) {
-            if (bet.getMatch() == match) {
-                bet.setBetStatus(BetStatus.PLAYED);
-            }
+        for (Bet bet : betRepository.findAllByMatch(match)) {
+            bet.setBetStatus(BetStatus.PLAYED);
         }
     }
 
@@ -59,11 +54,7 @@ public class BetManager implements BetManagerInterface {
             return false;
         }
 
-        if (bet.getId() <= 0) {
-            return false;
-        }
-
-        return true;
+        return bet.getId() > 0;
     }
 
 }

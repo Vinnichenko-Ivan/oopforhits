@@ -9,7 +9,6 @@ import com.example.oopforhits.domain.services.RecordsService;
 import exception.PlayerNotFoundException;
 import exception.TeamNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -24,9 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TeamService implements RecordsService<TeamDto> {
 
-    @Autowired
     private final PlayerRepository playerRepository;
-    @Autowired
     private final TeamRepository teamRepository;
 
     @Override
